@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Partisan_Small
   m_EditorClassIdentifier: 
   soldierType: 0
+  partisanSoldierList: 0000000001000000
   enemyBuildType: 0
   speed: 1
   damageNumber: 1
-  hp: 3
+  hp: 1
   material: {fileID: 2100000, guid: 282c474f557f6654a9b0a57a9a074144, type: 2}
+  canReproduce: 1

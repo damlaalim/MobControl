@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Small
   m_EditorClassIdentifier: 
   soldierType: 2
+  partisanSoldierList: 0200000003000000
   enemyBuildType: 1
   speed: 1
   damageNumber: 1

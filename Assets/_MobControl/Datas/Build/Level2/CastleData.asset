@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9419a8497428479f98e12a1db256775d, type: 3}
-  m_Name: Enemy_Big
+  m_Script: {fileID: 11500000, guid: 80e432f94e1b4a6b95a61b2e0ac8fb64, type: 3}
+  m_Name: CastleData
   m_EditorClassIdentifier: 
-  soldierType: 3
-  partisanSoldierList: 0200000003000000
-  enemyBuildType: 1
-  speed: 1
-  damageNumber: 2
-  hp: 3
-  material: {fileID: 2100000, guid: 49b202a2502af354dabfd6ab4af67d26, type: 2}
+  type: 0
+  maxHp: 5
+  soldierCreateWaitTime: 4
+  createSoldierCount: 3
