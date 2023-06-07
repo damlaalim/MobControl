@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace _MobControl.Scripts.Data
 {
@@ -6,10 +7,12 @@ namespace _MobControl.Scripts.Data
     public class SoldierData : ScriptableObject
     {
         public SoldierType soldierType;
-        public EnemyBuildType enemyBuildType;
+        public List<SoldierType> partisanSoldierList;
+        public BuildType enemyBuildType;
         public float speed;
         public int damageNumber;
         public int hp;
         public Material material;
+        public bool canReproduce;
     }
 }

@@ -9,15 +9,15 @@ namespace _MobControl.Scripts.Manager
     {
         [SerializeField] private List<BuildController> buildControllerList;
 
-        public void Initialize(SoldierManager soldierManager, GameManager gameManager)
+        public void Initialize(SoldierManager soldierManager, GameManager gameManager, CanvasManager canvasManager)
         {
             foreach (var buildController in buildControllerList)
             {
-                buildController.Initialize(soldierManager, gameManager);
+                buildController.Initialize(soldierManager, gameManager, canvasManager);
             }    
         }
         
-        public Transform GetBuildTransform(EnemyBuildType buildType)
+        public Transform GetBuildTransform(BuildType buildType)
         {
             foreach (var build in buildControllerList)
             {

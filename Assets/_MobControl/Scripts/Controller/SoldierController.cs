@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using _MobControl.Scripts.Data;
+using _MobControl.Scripts.Manager;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,29 +9,33 @@ namespace _MobControl.Scripts.Controller
     public class SoldierController : MonoBehaviour
     {
         public SoldierData GetSoldierData => _soldierData;
+        public bool soldierCanReproduce;
+        
+        [SerializeField] private Renderer soldierRenderer;
         
         private Transform _target;
         private SoldierData _soldierData;
         private NavMeshAgent _navMeshAgent;
         private int _currentHp;
-        private Renderer _renderer;
+        private SoldierManager _soldierManager;
 
-        public void Initialize(Transform targetObject, SoldierData data)
+        public void Initialize(Transform targetObject, SoldierData data, SoldierManager soldierManager)
         {
+            _soldierManager = soldierManager;
             _target = targetObject;
             _soldierData = data;
             _currentHp = data.hp;
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _renderer = GetComponent<Renderer>();
+            soldierCanReproduce = true;
 
-            _renderer.material = data.material;
+            soldierRenderer.material = data.material;
             
             StartCoroutine(MoveToTarget());
         }
 
         private void Destroy()
         {
-            Destroy(gameObject);
+            _soldierManager.DestroySoldier(this);
         }
         
         private IEnumerator MoveToTarget()
@@ -49,9 +54,9 @@ namespace _MobControl.Scripts.Controller
                 Destroy();
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.TryGetComponent<BuildController>(out var buildController) && 
+            if (other.TryGetComponent<BuildController>(out var buildController) && 
                 buildController.GetBuildData.type == GetSoldierData.enemyBuildType)
             {
                 buildController.CollisionDetection(_soldierData.damageNumber);
@@ -59,10 +64,23 @@ namespace _MobControl.Scripts.Controller
                 if (_currentHp <= 0)
                     Destroy();
             }
-            else if (collision.gameObject.TryGetComponent<SoldierController>(out var soldierController) && 
-                     soldierController.GetSoldierData.soldierType != GetSoldierData.soldierType)
+            else if (other.TryGetComponent<SoldierController>(out var soldierController) && 
+                     !GetSoldierData.partisanSoldierList.Contains(soldierController.GetSoldierData.soldierType))
             {
                 soldierController.CollisionDetection(_soldierData.damageNumber);
+            }
+            else if (other.TryGetComponent<GateController>(out var gateController) && soldierCanReproduce && GetSoldierData.canReproduce && gateController.GetGateType == GateType.Copy)
+            {
+                soldierCanReproduce = false;
+                _soldierManager.CopySoldier(this, (int)gateController.GatePoint);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent<GateController>(out var gateController) && !soldierCanReproduce)
+            {
+                soldierCanReproduce = true;
             }
         }
     }

@@ -12,6 +12,7 @@ namespace _MobControl.Scripts.Controller
         
         private Vector2 _startTouchPos, _currentPos, _endTouchPos;
         private bool _swipeHorizontal, _horizontalControl;
+        private Vector3 _inputValue = Vector3.zero;
         private CannonMachineController _machineController;
         private GameManager _gameManager;
 
@@ -20,7 +21,7 @@ namespace _MobControl.Scripts.Controller
             _machineController = machineController;
             _gameManager = gameManager;
             
-            gameManager.StartGame += StartGame;
+            gameManager.GameIsStart += StartGame;
         }
 
         private void StartGame()
@@ -43,18 +44,14 @@ namespace _MobControl.Scripts.Controller
                     var dis = _currentPos - _startTouchPos;
 
                     _machineController.Move(dis.x < -swipeRange);
-                    _machineController.CreateSoldier(SoldierType.PartisanSoldierSmall, 1);
+                    var soldierCount = _machineController.GetBuildData.createSoldierCount;
+                    _machineController.CreateSoldier(SoldierType.PartisanSoldierSmall, soldierCount);
                 }
 
                 if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
                     _endTouchPos = Input.GetTouch(0).position;
-                    var dis = _endTouchPos - _startTouchPos;
-
-                    if (Mathf.Abs(dis.x) < tapRange && Mathf.Abs(dis.y) < tapRange)
-                    {
-                        Debug.Log("tap");
-                    }
+                    _machineController.CreateBigSoldier();
                 }
                 
                 yield return 0;
