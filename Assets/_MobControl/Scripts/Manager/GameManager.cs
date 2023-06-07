@@ -16,11 +16,11 @@ namespace _MobControl.Scripts.Manager
         [SerializeField] private CameraManager cameraManager;
         [SerializeField] private CanvasManager canvasManager;
 
-        public bool gameIsStart;
-        
+        public bool gameIsStart, finishIsSuccess;
+
         public void Initialize()
         { 
-            canvasManager.Initialize();
+            canvasManager.Initialize(this);
             soldierManager.Initialize(buildManager);
             buildManager.Initialize(soldierManager, this, canvasManager);
             inputController.Initialize(machineController, this);
@@ -44,6 +44,7 @@ namespace _MobControl.Scripts.Manager
         public void FinishGame(bool success)
         {
             gameIsStart = false;
+            finishIsSuccess = success;
             soldierManager.FinishGame();
             LevelManager.Instance.FinishGame(success);
             canvasManager.OpenCanvas(CanvasType.End);

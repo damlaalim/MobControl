@@ -9,11 +9,11 @@ namespace _MobControl.Scripts.Manager
     {
         [SerializeField] private List<CanvasController> canvasList;
         
-        public void Initialize()
+        public void Initialize(GameManager gameManager)
         {
             foreach (var canvas in canvasList)
             {
-                canvas.Initialize();
+                canvas.Initialize(gameManager);
             }
         }
 

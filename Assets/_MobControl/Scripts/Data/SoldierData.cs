@@ -6,13 +6,12 @@ namespace _MobControl.Scripts.Data
     [CreateAssetMenu(fileName = "SoldierData", menuName = "Data/Soldier", order = 1)]
     public class SoldierData : ScriptableObject
     {
+        public GameObject soldierPrefab;
         public SoldierType soldierType;
         public List<SoldierType> partisanSoldierList;
         public BuildType enemyBuildType;
-        public float speed;
-        public int damageNumber;
-        public int hp;
+        public int damageNumber, hp;
         public Material material;
-        public bool canReproduce;
+        public bool canReproduce, canKillByGate;
     }
 }

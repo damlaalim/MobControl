@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9419a8497428479f98e12a1db256775d, type: 3}
   m_Name: Partisan_Big
   m_EditorClassIdentifier: 
+  soldierPrefab: {fileID: 5452424226427152673, guid: fb17413f88cf31d47b9bc61b28ec2fc3,
+    type: 3}
   soldierType: 1
   partisanSoldierList: 0000000001000000
   enemyBuildType: 0
-  speed: 1
   damageNumber: 2
-  hp: 3
+  hp: 5
   material: {fileID: 2100000, guid: 2d3baefdf5c13014e92492e1b914ace5, type: 2}
   canReproduce: 1
+  canKillByGate: 1

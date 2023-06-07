@@ -1,4 +1,5 @@
 ﻿using _MobControl.Scripts.Data;
+using _MobControl.Scripts.Manager;
 using UnityEngine;
 
 namespace _MobControl.Scripts.Controller.CanvasController
@@ -11,9 +12,11 @@ namespace _MobControl.Scripts.Controller.CanvasController
         public virtual void Open() => canvas.enabled = true;
         public void Close() => canvas.enabled = false;
 
-        public virtual void Initialize()
+        protected GameManager gameManager;
+
+        public virtual void Initialize(GameManager pGameManager)
         {
-            
+            gameManager = pGameManager;
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8333757710815116258}
   - component: {fileID: 2476352036039177018}
   m_Layer: 0
-  m_Name: MainSoldier
+  m_Name: BigSoldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854e71759379456b9ae25e1fe3b35a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soldierCanReproduce: 0
   soldierRenderer: {fileID: 3294972418623868154}
 --- !u!195 &1303894938
 NavMeshAgent:
@@ -59,13 +60,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -97,10 +98,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5926647
-  m_Height: 1.8646529
+  m_Radius: 1.8826096
+  m_Height: 6.4974957
   m_Direction: 1
-  m_Center: {x: 0.0011193752, y: 0.8798603, z: 0}
+  m_Center: {x: 0.13227463, y: 3.1962814, z: 0}
 --- !u!1001 &5774744583204941007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,6 +113,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29cc49a0688496243b7ce6e6240db930,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29cc49a0688496243b7ce6e6240db930,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29cc49a0688496243b7ce6e6240db930,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29cc49a0688496243b7ce6e6240db930,
         type: 3}
@@ -162,6 +178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29cc49a0688496243b7ce6e6240db930,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -171677267976282059, guid: 29cc49a0688496243b7ce6e6240db930,
         type: 3}

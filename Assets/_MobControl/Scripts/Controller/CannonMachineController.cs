@@ -1,15 +1,11 @@
 ﻿using System.Collections;
-using _MobControl.Scripts.Controller.CanvasController;
 using _MobControl.Scripts.Data;
-using _MobControl.Scripts.Manager;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace _MobControl.Scripts.Controller
 {
     public class CannonMachineController : BuildController
     {
-        [SerializeField] private NavMeshAgent navMeshAgent;
         [SerializeField] private SkinnedMeshRenderer meshRenderer;
         [SerializeField] private float soldierAnimDuration, soldierSlideIncCount, moveSpeed;
         [SerializeField] private int minKey, maxKey;
@@ -17,21 +13,22 @@ namespace _MobControl.Scripts.Controller
 
         private bool _isMove, _isCreateBigSoldier;
         private float _bigSoldierSlideCount;
-
+        
         public void Move(bool moveIsLeft)
         {
-            var direction = moveIsLeft ? -1 : 1;
-            var pos = transform.position;
-            if (pos.x <= border.x || pos.x >= border.y)
+            var posX = transform.position.x;
+            if ((posX <= border.x && moveIsLeft) || (posX >= border.y && !moveIsLeft))
                 return;
-            pos.x +=  moveSpeed * direction* Time.deltaTime;
-
-            transform.position = pos;
+            
+            var direction = moveIsLeft ? -1 : 1;
+            var movement = new Vector3(direction, 0, 0);
+            var newPos = movement * moveSpeed * Time.deltaTime;
+            transform.position += newPos;
+            
             if (_isCreateBigSoldier)
                 return;
 
             _bigSoldierSlideCount += soldierSlideIncCount;
-
             inGameCanvas.UpdateCannonSliderValue(_bigSoldierSlideCount);
 
             if (_bigSoldierSlideCount >= 1)

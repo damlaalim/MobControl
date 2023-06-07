@@ -74,6 +74,11 @@ namespace _MobControl.Scripts.Controller
                 soldierCanReproduce = false;
                 _soldierManager.CopySoldier(this, (int)gateController.GatePoint);
             }
+            else if (other.TryGetComponent<GateController>(out var deadGateController) &&
+                     deadGateController.GetGateType == GateType.Dead && GetSoldierData.canKillByGate)
+            {
+                Destroy();
+            }
         }
 
         private void OnTriggerExit(Collider other)

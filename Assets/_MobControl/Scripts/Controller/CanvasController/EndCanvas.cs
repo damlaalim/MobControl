@@ -1,16 +1,17 @@
-﻿using _MobControl.Scripts.Manager;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _MobControl.Scripts.Controller.CanvasController
 {
     public class EndCanvas : CanvasController
     {
-        [SerializeField] private TextMeshProUGUI levelText;
-
+        [SerializeField] private Canvas successCanvas;
+        [SerializeField] private Canvas failCanvas;
+        
         public override void Open()
         {
-            levelText.text = (LevelManager.Instance.GetLevel + 1).ToString();
+            successCanvas.enabled = gameManager.finishIsSuccess;
+            failCanvas.enabled = !gameManager.finishIsSuccess;
+            
             base.Open();
         }
     }

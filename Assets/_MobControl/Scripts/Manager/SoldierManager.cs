@@ -9,8 +9,6 @@ namespace _MobControl.Scripts.Manager
     {
         [SerializeField] private List<SoldierData> soldierDataList;
 
-        [SerializeField] private GameObject soldierPrefab;
-
         private BuildManager _buildManager;
         private List<SoldierController> _createdSoldierList = new();
 
@@ -25,7 +23,7 @@ namespace _MobControl.Scripts.Manager
             {
                 if (soldierData.soldierType == soldierType)
                 {
-                    var newSoldier = Instantiate(soldierPrefab);
+                    var newSoldier = Instantiate(soldierData.soldierPrefab);
                     var soldierController = newSoldier.GetComponent<SoldierController>();
                     
                     var targetBuildTransform = _buildManager.GetBuildTransform(soldierData.enemyBuildType);
