@@ -18,14 +18,13 @@ namespace _MobControl.Scripts.Controller
         
         public void Move(bool moveIsLeft)
         {
-            var posX = transform.position.x;
-            if ((posX <= border.x && moveIsLeft) || (posX >= border.y && !moveIsLeft))
+            var direction = moveIsLeft ? -1 : 1;
+            var newPos = transform.position + new Vector3(direction * moveSpeed * Time.deltaTime, 0, 0);
+            
+            if (!IsWithinBorders(newPos.x))
                 return;
             
-            var direction = moveIsLeft ? -1 : 1;
-            var movement = new Vector3(direction, 0, 0);
-            var newPos = movement * moveSpeed * Time.deltaTime;
-            transform.position += newPos;
+            transform.position = newPos;
 
             cannonArm.transform.rotation = Quaternion.AngleAxis(armRotateAngle, moveIsLeft ? Vector3.forward : Vector3.back) * cannonArm.transform.rotation;
             
@@ -37,6 +36,11 @@ namespace _MobControl.Scripts.Controller
 
             if (_bigSoldierSlideCount >= 1)
                 _isCreateBigSoldier = true;
+        }
+        
+        private bool IsWithinBorders(float xPos)
+        {
+            return xPos > border.x && xPos < border.y;
         }
 
         public void CreateBigSoldier()

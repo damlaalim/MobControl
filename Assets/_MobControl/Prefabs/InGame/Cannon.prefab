@@ -54,7 +54,7 @@ MonoBehaviour:
   meshRenderer: {fileID: 4025648669425776466}
   soldierAnimDuration: 0.1
   soldierSlideIncCount: 0.01
-  moveSpeed: 30
+  moveSpeed: 40
   armRotateAngle: 15
   minKey: 0
   maxKey: 100

@@ -7,8 +7,11 @@ namespace _MobControl.Scripts.Controller
 {
     public class CastleBuildController : BuildController
     {
+        private GameManager _gameManager;
+        
         public override void Initialize(SoldierManager soldierManager, GameManager gameManager, CanvasManager canvasManager)
         {
+            _gameManager = gameManager;
             base.Initialize(soldierManager, gameManager, canvasManager);
             gameManager.GameIsStart += StartGame;
             inGameCanvas.UpdateCastleHpValue(currentHp.ToString());
@@ -27,7 +30,7 @@ namespace _MobControl.Scripts.Controller
 
         private IEnumerator CreateSoldier()
         {
-            while (currentHp > 0)
+            while (currentHp > 0 && _gameManager.gameIsStart)
             {
                 CreateSoldier(SoldierType.EnemySoldierSmall, GetBuildData.createSoldierCount);
                 yield return new WaitForSeconds(.2f);
