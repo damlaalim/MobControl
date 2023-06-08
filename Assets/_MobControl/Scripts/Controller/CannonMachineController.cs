@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using _MobControl.Scripts.Data;
 using UnityEngine;
+using static System.Single;
 
 namespace _MobControl.Scripts.Controller
 {
     public class CannonMachineController : BuildController
     {
         [SerializeField] private SkinnedMeshRenderer meshRenderer;
-        [SerializeField] private float soldierAnimDuration, soldierSlideIncCount, moveSpeed;
+        [SerializeField] private float soldierAnimDuration, soldierSlideIncCount, moveSpeed, armRotateAngle;
         [SerializeField] private int minKey, maxKey;
         [SerializeField] private Vector2Int border;
+        [SerializeField] private GameObject cannonArm;
 
         private bool _isMove, _isCreateBigSoldier;
         private float _bigSoldierSlideCount;
@@ -24,6 +26,8 @@ namespace _MobControl.Scripts.Controller
             var movement = new Vector3(direction, 0, 0);
             var newPos = movement * moveSpeed * Time.deltaTime;
             transform.position += newPos;
+
+            cannonArm.transform.rotation = Quaternion.AngleAxis(armRotateAngle, moveIsLeft ? Vector3.forward : Vector3.back) * cannonArm.transform.rotation;
             
             if (_isCreateBigSoldier)
                 return;

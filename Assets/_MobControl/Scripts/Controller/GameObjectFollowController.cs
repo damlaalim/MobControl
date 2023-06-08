@@ -1,23 +1,29 @@
 ﻿using System.Collections;
+using _MobControl.Scripts.Manager;
 using UnityEngine;
 
 namespace _MobControl.Scripts.Controller
 {
     public class GameObjectFollowController : MonoBehaviour
     {
-        [SerializeField] private Transform target;
+        public Transform target;
         private Camera _mainCamera;
 
-        public void Initialize()
+        public void Initialize(GameManager gameManager)
         {
             _mainCamera = Camera.main;
+            gameManager.GameIsStart += GameIsStart;
+        }
+
+        private void GameIsStart()
+        {
             StartCoroutine(FollowTargetRoutine());
         }
 
         private IEnumerator FollowTargetRoutine()
         {
             Vector3 screenPos;
-            while (true)
+            while (target is not null)
             {
                 screenPos = _mainCamera.WorldToScreenPoint(target.position);
                 transform.position = screenPos;

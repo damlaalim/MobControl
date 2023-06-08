@@ -27,10 +27,7 @@ namespace _MobControl.Scripts.Manager
                     var soldierController = newSoldier.GetComponent<SoldierController>();
                     
                     var targetBuildTransform = _buildManager.GetBuildTransform(soldierData.enemyBuildType);
-                    
-                    if (targetBuildTransform is null)
-                        return;
-                    
+                                        
                     soldierController.Initialize(targetBuildTransform, soldierData, this);
                     soldierController.transform.position = soldierPos;
                     soldierController.transform.rotation = soldierRot;
@@ -66,7 +63,7 @@ namespace _MobControl.Scripts.Manager
         {
             foreach (var soldier in _createdSoldierList)
             {
-                Destroy(soldier.gameObject);
+                soldier.Destroy();
             }    
         }
         

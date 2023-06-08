@@ -8,11 +8,11 @@ namespace _MobControl.Scripts.Manager
     {
         [SerializeField] private List<GameObjectFollowController> followControllerList;
 
-        public void Initialize()
+        public void Initialize(GameManager gameManager)
         {
             foreach (var followController in followControllerList)
             {
-                followController.Initialize();
+                followController.Initialize(gameManager);
             }
         }
     }

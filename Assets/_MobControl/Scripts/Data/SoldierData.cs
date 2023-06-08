@@ -12,6 +12,6 @@ namespace _MobControl.Scripts.Data
         public BuildType enemyBuildType;
         public int damageNumber, hp;
         public Material material;
-        public bool canReproduce, canKillByGate;
+        public bool canReproduce, canKillByGate, canKillByObstacle;
     }
 }

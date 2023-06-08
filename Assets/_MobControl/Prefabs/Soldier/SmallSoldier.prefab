@@ -48,7 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854e71759379456b9ae25e1fe3b35a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soldierCanReproduce: 0
   soldierRenderer: {fileID: 3294972418623868154}
+  bounceForce: 3
+  bounceTime: 0.5
+  deadDelay: 0.5
+  animator: {fileID: 3043346690360915920}
 --- !u!195 &1303894938
 NavMeshAgent:
   m_ObjectHideFlags: 0

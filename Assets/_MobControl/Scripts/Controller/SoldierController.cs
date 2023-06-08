@@ -12,12 +12,19 @@ namespace _MobControl.Scripts.Controller
         public bool soldierCanReproduce;
         
         [SerializeField] private Renderer soldierRenderer;
+        [SerializeField] private float bounceForce, bounceTime, deadDelay;
+        [SerializeField] private Animator animator;
         
         private Transform _target;
         private SoldierData _soldierData;
         private NavMeshAgent _navMeshAgent;
         private int _currentHp;
         private SoldierManager _soldierManager;
+        private Coroutine _moveRoutine;
+        private bool _isMove;
+        private Collider _collider;
+
+        private static readonly int Die = Animator.StringToHash("Die");
 
         public void Initialize(Transform targetObject, SoldierData data, SoldierManager soldierManager)
         {
@@ -26,23 +33,37 @@ namespace _MobControl.Scripts.Controller
             _soldierData = data;
             _currentHp = data.hp;
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _collider = GetComponent<Collider>();
             soldierCanReproduce = true;
 
             soldierRenderer.material = data.material;
-            
-            StartCoroutine(MoveToTarget());
+            _isMove = true;
+            _moveRoutine = StartCoroutine(MoveToTarget());
         }
 
-        private void Destroy()
+        public void Destroy()
         {
-            _soldierManager.DestroySoldier(this);
+            _collider.enabled = false;
+            _navMeshAgent.updatePosition = false;
+            _isMove = false;
+            if (_moveRoutine is not null)
+                StopCoroutine(_moveRoutine);
+            
+            animator.CrossFade(Die, 0f, 0);
+  
+            StartCoroutine(DestroyRoutine());            
+            IEnumerator DestroyRoutine()
+            {
+                yield return new WaitForSeconds(deadDelay);
+                _soldierManager.DestroySoldier(this);
+            }
         }
         
         private IEnumerator MoveToTarget()
         {
-            while (true)
+            while (_isMove)
             {
-                _navMeshAgent.destination = _target.position;
+                _navMeshAgent.SetDestination(_target.position);
                 yield return null;
             }
         }
@@ -54,28 +75,68 @@ namespace _MobControl.Scripts.Controller
                 Destroy();
         }
 
+        private IEnumerator BounceRoutine(Vector3 direction)
+        {
+            var elapsedTime = 0f;
+            var startPos = transform.position;
+            var endPos = startPos + direction * bounceForce;
+            
+            while (elapsedTime < bounceTime)
+            {
+                var normalized = elapsedTime / bounceTime;
+                transform.position = Vector3.Lerp(startPos, endPos, normalized);
+                elapsedTime += Time.deltaTime;
+                yield return 0;
+            }
+
+            transform.position = endPos;
+        }
+
+        private void CollisionDetection(Transform collisionTransform)
+        {
+            --_currentHp;
+            if (_currentHp <= 0)
+                Destroy();
+            else
+            {
+                var dir = (transform.position - collisionTransform.position).normalized;
+                StartCoroutine(BounceRoutine(dir));
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<BuildController>(out var buildController) && 
                 buildController.GetBuildData.type == GetSoldierData.enemyBuildType)
             {
                 buildController.CollisionDetection(_soldierData.damageNumber);
-                --_currentHp;
-                if (_currentHp <= 0)
-                    Destroy();
+                CollisionDetection(other.transform);
+            }
+            else if (other.TryGetComponent<ObstacleController>(out var obstacleController))
+            {
+                if (GetSoldierData.canKillByObstacle)
+                {
+                    obstacleController.CollisionDetection(_soldierData.damageNumber);
+                    CollisionDetection(other.transform);
+                }
+                else
+                {
+                    var dir = (transform.position - other.transform.position).normalized;
+                    StartCoroutine(BounceRoutine(dir));
+                }
             }
             else if (other.TryGetComponent<SoldierController>(out var soldierController) && 
                      !GetSoldierData.partisanSoldierList.Contains(soldierController.GetSoldierData.soldierType))
             {
                 soldierController.CollisionDetection(_soldierData.damageNumber);
             }
-            else if (other.TryGetComponent<GateController>(out var gateController) && soldierCanReproduce && GetSoldierData.canReproduce && gateController.GetGateType == GateType.Copy)
+            else if (other.TryGetComponent<GateController>(out var gateController) && soldierCanReproduce && GetSoldierData.canReproduce && gateController.type == GateType.Copy)
             {
                 soldierCanReproduce = false;
-                _soldierManager.CopySoldier(this, (int)gateController.GatePoint);
+                _soldierManager.CopySoldier(this, (int)gateController.gatePoint);
             }
             else if (other.TryGetComponent<GateController>(out var deadGateController) &&
-                     deadGateController.GetGateType == GateType.Dead && GetSoldierData.canKillByGate)
+                     deadGateController.type == GateType.Dead && GetSoldierData.canKillByGate)
             {
                 Destroy();
             }

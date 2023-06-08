@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CastleData
   m_EditorClassIdentifier: 
   type: 0
-  maxHp: 100
+  maxHp: 50
   soldierCreateWaitTime: 4
   createSoldierCount: 3

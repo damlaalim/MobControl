@@ -22,3 +22,4 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 2d3baefdf5c13014e92492e1b914ace5, type: 2}
   canReproduce: 1
   canKillByGate: 1
+  canKillByObstacle: 1

@@ -55,9 +55,11 @@ MonoBehaviour:
   soldierAnimDuration: 0.1
   soldierSlideIncCount: 0.01
   moveSpeed: 30
+  armRotateAngle: 15
   minKey: 0
   maxKey: 100
   border: {x: -5, y: 5}
+  cannonArm: {fileID: 3011388412816098504}
 --- !u!54 &3825365357236860957
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -72,7 +74,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 94
   m_CollisionDetection: 0
 --- !u!65 &4819219301500477997
 BoxCollider:
@@ -211,6 +213,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8082078415302075985, guid: 956bb6fe77d93b643b6edd572b66c194,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8082078415302075985, guid: 956bb6fe77d93b643b6edd572b66c194,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4683669308469848369, guid: 956bb6fe77d93b643b6edd572b66c194,
         type: 3}
       propertyPath: m_CastShadows
@@ -298,6 +310,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 956bb6fe77d93b643b6edd572b66c194, type: 3}
+--- !u!1 &3011388412816098504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1210692559558737696, guid: 956bb6fe77d93b643b6edd572b66c194,
+    type: 3}
+  m_PrefabInstance: {fileID: 5113934436260021288}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &4025648669425776466 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8153101253863224186, guid: 956bb6fe77d93b643b6edd572b66c194,

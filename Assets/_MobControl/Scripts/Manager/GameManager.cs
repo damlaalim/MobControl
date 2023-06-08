@@ -15,6 +15,7 @@ namespace _MobControl.Scripts.Manager
         [SerializeField] private BuildManager buildManager;
         [SerializeField] private CameraManager cameraManager;
         [SerializeField] private CanvasManager canvasManager;
+        [SerializeField] private ObstacleManager obstacleManager;
 
         public bool gameIsStart, finishIsSuccess;
 
@@ -24,7 +25,8 @@ namespace _MobControl.Scripts.Manager
             soldierManager.Initialize(buildManager);
             buildManager.Initialize(soldierManager, this, canvasManager);
             inputController.Initialize(machineController, this);
-            cameraManager.Initialize();
+            cameraManager.Initialize(this);
+            obstacleManager.Initialize(canvasManager);
             
             canvasManager.OpenCanvas(CanvasType.Start);
         }
