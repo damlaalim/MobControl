@@ -133,7 +133,7 @@ namespace _MobControl.Scripts.Controller
             else if (other.TryGetComponent<GateController>(out var gateController) && soldierCanReproduce && GetSoldierData.canReproduce && gateController.type == GateType.Copy)
             {
                 soldierCanReproduce = false;
-                _soldierManager.CopySoldier(this, (int)gateController.gatePoint);
+                _soldierManager.CopySoldier(this, (int)gateController.gatePoint - 1);
             }
             else if (other.TryGetComponent<GateController>(out var deadGateController) &&
                      deadGateController.type == GateType.Dead && GetSoldierData.canKillByGate)
