@@ -63,7 +63,8 @@ namespace _MobControl.Scripts.Controller
         {
             while (_isMove)
             {
-                _navMeshAgent.SetDestination(_target.position);
+                if (_target != null)
+                    _navMeshAgent.SetDestination(_target.position);
                 yield return null;
             }
         }
